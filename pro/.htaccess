@@ -1,0 +1,89 @@
+# منع التجوال بين المجلدات
+Options -Indexes
+
+# استخدام mod_rewrite للتحكم في الوصول إلى المجلدات
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # السماح بالوصول للملفات عبر الاستدعاءات البرمجية
+    RewriteCond %{REQUEST_URI} ^/web/js/ [NC]
+    RewriteCond %{REQUEST_URI} ^/web/css/ [NC]
+    RewriteCond %{HTTP_REFERER} !^https?://(www\.)?abdallah\.com/ [NC]
+    RewriteCond %{HTTP_USER_AGENT} !^.*(JavaScript|Python|PHP|curl).*$ [NC]
+    RewriteRule ^.*$ - [F,L]
+
+    # السماح بالوصول للملفات داخل المجلدات المحددة
+    RewriteCond %{REQUEST_URI} ^/admin/ [OR]
+    RewriteCond %{REQUEST_URI} ^/error/ [OR]
+    RewriteCond %{REQUEST_URI} ^/image/ [OR]
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^.*$ - [L]
+</IfModule>
+
+# تعيين صفحة الخطأ 403
+ErrorDocument 403 /error/403.html
+
+# تعيين صفحة الخطأ 404
+ErrorDocument 404 /error/404.html
+
+# تعيين الصفحة الرئيسية الافتراضية
+DirectoryIndex login.html
+
+# تمكين ضغط الملفات باستخدام mod_deflate لتحسين سرعة التحميل
+<IfModule mod_deflate.c>
+    # ضغط أنواع الملفات الشائعة
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json application/xml application/xhtml+xml application/font-woff2 application/x-font-ttf image/svg+xml
+
+    # استثناءات لبعض المتصفحات القديمة
+    BrowserMatch ^Mozilla/4 gzip-only-text/html
+    BrowserMatch ^Mozilla/4\.0[678] no-gzip
+    BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+    Header append Vary User-Agent
+</IfModule>
+
+# تفعيل التهوين المؤقت (caching) لتحسين الأداء
+<IfModule mod_expires.c>
+    ExpiresActive On
+
+    # ملفات الصور (تخزين لمدة شهر)
+    ExpiresByType image/jpg "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+    ExpiresByType image/svg+xml "access plus 1 month"
+    ExpiresByType image/x-icon "access plus 1 year"
+
+    # ملفات CSS وجافا سكريبت (تخزين لمدة أسبوع)
+    ExpiresByType text/css "access plus 1 week"
+    ExpiresByType text/javascript "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 week"
+
+    # ملفات PDF وفلاش (تخزين لمدة شهر)
+    ExpiresByType application/pdf "access plus 1 month"
+    ExpiresByType application/x-shockwave-flash "access plus 1 month"
+
+    # ملفات HTML (تخزين لمدة 2 ساعة)
+    ExpiresByType text/html "access plus 2 hours"
+</IfModule>
+
+# تمكين تخزين المتصفح (Browser Caching)
+<IfModule mod_headers.c>
+    <FilesMatch "\.(ico|jpg|jpeg|png|gif|swf|webp)$">
+        Header set Cache-Control "public, max-age=2592000"
+    </FilesMatch>
+    <FilesMatch "\.(css|js|pdf|flv|ico|woff|woff2|ttf)$">
+        Header set Cache-Control "public, max-age=604800"
+    </FilesMatch>
+    <FilesMatch "\.(html|htm)$">
+        Header set Cache-Control "public, max-age=7200"
+    </FilesMatch>
+</IfModule>
+
+# الحماية ضد البرمجيات الضارة ومنع حقن الأكواد الضارة
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-XSS-Protection "1; mode=block"
+    Header always set X-Frame-Options "DENY"
+</IfModule>

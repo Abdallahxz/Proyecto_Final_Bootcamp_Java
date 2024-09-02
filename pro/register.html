@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- page icon -->
+  <link rel="icon" type="image/png" href="/image/icon.png" />
+  <title>Register</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- FontAwesome CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+    crossorigin="anonymous" />
+  <!-- Toastr CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/css/register.css" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-8">
+        <div class=" mt-5">
+          <div class="card-body">
+            <div style="display: flex; justify-content: center">
+              <img src="/image/logo.png" alt="Company Logo" class="img-fluid mb-4"
+                style="max-width: 200px; text-align: center" />
+            </div>
+            <h3 class="card-title text-center">Register</h3>
+            <form method="post" id="registerForm">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="firstName">First Name</label>
+                  <input type="text" class="form-control" id="firstName" placeholder="Enter first name" />
+                </div>
+                <div class="form-group">
+                  <label for="lastName">Last Name</label>
+                  <input type="text" class="form-control" id="lastName" placeholder="Enter last name" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="age">Age</label>
+                  <input type="number" class="form-control" id="age" placeholder="Enter age" />
+                </div>
+                <div class="form-group">
+                  <label for="email">Email Address</label>
+                  <input type="email" class="form-control" id="email" placeholder="Enter email" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="password">Password</label>
+                  <div class="input-group">
+                    <input type="password" class="form-control" id="password" placeholder="Enter password" />
+                    <div class="input-group-append">
+                      <span class="input-group-text">
+                        <i class="fas fa-eye" id="togglePassword"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="confirmPassword">Confirm Password</label>
+                  <div class="input-group">
+                    <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password" />
+                    <div class="input-group-append">
+                      <span class="input-group-text">
+                        <i class="fas fa-eye" id="toggleConfirmPassword"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="privacyPolicy" />
+                <label class="form-check-label" for="privacyPolicy">
+                  I agree to the <a href="#">Privacy Policy</a>
+                </label>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block">
+                Register
+              </button>
+            </form>
+          </div>
+          <div class="card-footer text-center">
+            <small>
+              Already have an account? <a href="/login.html">Login here</a>
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!--toast JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+  <!-- Custom JS -->
+  <script type="module" src="/js/register.js"></script>
+</body>
+
+</html>

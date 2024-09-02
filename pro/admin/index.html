@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard</title>
+
+  <!-- تفعيل متصفح Edge لتحسين الأداء -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!--meta Description-->
+  <meta name="description" content="Admin Dashboard">
+
+  <!-- meta keyword -->
+  <meta name="keywords" content="Admin Dashboard">
+
+  <!-- meta author -->
+  <meta name="author" content="Admin Dashboard">
+
+  <!-- Page icon -->
+  <link rel="icon" type="image/png" href="/image/icon.png" />
+  <!-- Bootstrap CSS -->
+  <link href="/css/lib/bootstrap.min.css" rel="stylesheet" />
+  <!-- FontAwesome CSS -->
+  <link rel="stylesheet" href="/css/lib/all.min.css">
+
+  <!-- Custom CSS -->
+  <link href="/css/dashboard.css" rel="stylesheet" />
+
+  <style>
+    .sidebar {
+      width: 250px;
+    }
+
+    .ag-courses_item {
+      margin-bottom: 20px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .ag-courses-item_title {
+      font-weight: bold;
+    }
+
+    .progress-bar {
+      height: 1.5rem;
+    }
+
+    /* Ensure sufficient contrast */
+    .btn-primary {
+      background-color: #007bff;
+      border: none;
+      color: #fff;
+      /* Ensure text color is accessible */
+    }
+
+    .progress-bar.bg-success {
+      background-color: #28a745;
+    }
+
+    .progress-bar.bg-warning {
+      background-color: #ffc107;
+    }
+
+    .progress-bar.bg-danger {
+      background-color: #dc3545;
+    }
+
+    .picture-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px;
+      border-radius: 10px;
+      background-color: #ffffff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 290px;
+    }
+
+    .picture {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 20px;
+      border: 5px solid #ffffff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .total-data-container-card {
+
+      display: flex;
+      justify-content: space-around;
+      align-items: stretch;
+      flex-wrap: wrap;
+      gap: 3px;
+      text-align: center;
+
+    }
+
+    .btn-primary {
+      border-radius: 5px;
+      background-color: #0056b3;
+      /* لون خلفية داكن أكثر */
+      color: #ffffff;
+      /* لون النص أبيض */
+    }
+
+    .btn-success {
+      background-color: #1e7e34;
+      /* خلفية خضراء */
+      color: #ffffff;
+      /* نص أبيض */
+    }
+
+
+    .btn-primary:hover {
+      box-shadow: 0 4px 8px rgba(230, 229, 229, 0.4);
+    }
+
+    .count-container {
+      margin-top: 15px;
+    }
+
+    .data-count {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #007bff;
+      /* Blue color for the counter */
+    }
+
+    .count-label {
+      font-size: 1rem;
+      color: #333;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="d-flex" style="width: 100%; height: 100%">
+    <!-- Sidebar -->
+    <nav id="sidebar" class="sidebar bg-dark text-light">
+      <div class="d-flex flex-column h-100">
+        <div class="p-3 flex-grow-1">
+          <h4 class="text-center">Dashboard</h4>
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link active" href="/admin/index.html">
+                <i class="fas fa-home"></i> Home
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/profile.html">
+                <i class="fas fa-user"></i> Profile
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/courses.html">
+                <i class="fas fa-book"></i> Courses
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/mange-course.html">
+                <i class="fas fa-users"></i> Mange Course
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/manage-tests.html">
+                  <i class="fas fa-clipboard"></i> Manage Tests
+              </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="/admin/correct-tests.html">
+                <i class="fas fa-check-circle"></i> Correct Tests
+            </a>
+        </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/messages.html">
+                <i class="fas fa-envelope"></i> Messages
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/settings.html">
+                <i class="fas fa-cog"></i> Settings
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="p-3">
+          <a class="nav-link" href="/login.html">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content flex-grow-1 p-4">
+      <!-- Header -->
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h2 class="donotcross">Dashboard</h2>
+
+        <!-- Sidebar Toggle Button -->
+        <button id="sidebarToggleDesktop" class="btn btn-light btn-sm sidebar-toggle-btn" aria-label="Toggle sidebar">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+
+      <div class="total-data-container-card">
+
+        <div class="users-picture-card picture-card ">
+          <img src="/../image/user.png" alt="users Picture" class="users-picture picture" />
+          <div class="user-count-container count-container">
+            <div id="userCount" class="user-count data-count">0</div>
+            <div class="user-count-label count-label">Registered Users</div>
+          </div>
+        </div>
+
+
+        <div class="course-picture-card picture-card">
+          <img src="/../image/course.png" alt="course Picture" class="course-picture picture" />
+          <div class="course-count-container count-container">
+            <div id="courseCount" class="course-count data-count">0</div>
+            <div class="course-count-label count-label">Totla Courses</div>
+          </div>
+        </div>
+
+        <div class="lesson-picture-card picture-card">
+          <img src="/../image/lesson.png" alt="lesson Picture" class="lesson-picture picture" />
+          <div class="lesson-count-container count-container">
+            <div id="courseLesson" class="lesson-count data-count">0</div>
+            <div class="lesson-count-label count-label">Totla lesson</div>
+          </div>
+        </div>
+
+        <div class="exams-picture-card picture-card ">
+          <img src="/../image/exam.png" alt="exams Picture" class="exams-picture picture" />
+          <div class="teachers-count-container count-container">
+            <div id="examsCount" class="teachers-count data-count">0</div>
+            <div class="teachers-count-label count-label">Registered Exams</div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Courses -->
+      <div class="dashboard-container-card">
+        <div class="ag-courses_item p-1">
+          <a href="#" style="text-decoration: none;" class="ag-courses-item_link">
+            <div class="ag-courses-item_title">
+              Advanced Programming in Python
+            </div>
+            <div class="ag-courses-item_date-box">
+              Start: <span class="ag-courses-item_date">10.12.2022</span>
+            </div>
+          </a>
+          <div class="btn-group m-2" style="display: flex; justify-content: flex-end">
+            <button type="button" class="btn btn-primary" style="max-width: 100px"
+              aria-label="More information about Advanced Programming in Python">more info</button>
+          </div>
+          <div class="progress" aria-label="Course progress">
+            <div class="progress-bar bg-success" role="progressbar" style="width: 60%;" aria-valuenow="60"
+              aria-valuemin="0" aria-valuemax="100" aria-label="60% completed"></div>
+          </div>
+        </div>
+
+        <div class="ag-courses_item p-1">
+          <a href="#" style="text-decoration: none;" class="ag-courses-item_link">
+            <div class="ag-courses-item_title">
+              Introduction to Data Science
+            </div>
+            <div class="ag-courses-item_date-box">
+              Start: <span class="ag-courses-item_date">15.01.2023</span>
+            </div>
+          </a>
+          <div class="btn-group m-2" style="display: flex; justify-content: flex-end">
+            <button type="button" class="btn btn-primary" style="max-width: 100px"
+              aria-label="More information about Introduction to Data Science">more info</button>
+          </div>
+          <div class="progress" aria-label="Course progress">
+            <div class="progress-bar bg-warning" role="progressbar" style="width: 50%;" aria-valuenow="50"
+              aria-valuemin="0" aria-valuemax="100" aria-label="50% completed"></div>
+          </div>
+        </div>
+
+        <div class="ag-courses_item p-1">
+          <a href="#" style="text-decoration: none;" class="ag-courses-item_link">
+            <div class="ag-courses-item_title">
+              UI/Web & Graph Design for Teenagers 11-17 Years Old
+            </div>
+            <div class="ag-courses-item_date-box">
+              Start: <span class="ag-courses-item_date">04.11.2022</span>
+            </div>
+          </a>
+          <div class="btn-group m-2" style="display: flex; justify-content: flex-end">
+            <button type="button" class="btn btn-primary" style="max-width: 100px"
+              aria-label="More information about UI/Web & Graph Design for Teenagers 11-17 Years Old">more info</button>
+          </div>
+          <div class="progress" aria-label="Course progress">
+            <div class="progress-bar bg-secondary" role="progressbar" style="width: 80%;" aria-valuenow="80"
+              aria-valuemin="0" aria-valuemax="100" aria-label="80% completed"></div>
+          </div>
+        </div>
+
+        <div class="ag-courses_item p-1">
+          <a href="#" style="text-decoration: none;" class="ag-courses-item_link">
+            <div class="ag-courses-item_title">
+              Web Development Bootcamp
+            </div>
+            <div class="ag-courses-item_date-box">
+              Start: <span class="ag-courses-item_date">01.02.2023</span>
+            </div>
+          </a>
+          <div class="btn-group m-2" style="display: flex; justify-content: flex-end">
+            <button type="button" class="btn btn-primary" style="max-width: 100px"
+              aria-label="More information about Web Development Bootcamp">more info</button>
+          </div>
+          <div class="progress" aria-label="Course progress">
+            <div class="progress-bar bg-danger" role="progressbar" style="width: 90%;" aria-valuenow="90"
+              aria-valuemin="0" aria-valuemax="100" aria-label="90% completed"></div>
+          </div>
+        </div>
+      </div>
+
+
+
+    </main>
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script  src="/js/lib/jquery-3.5.1.slim.min.js" ></script>
+  <script src="/js/lib/popper.min.js"></script>
+  <script src="/js/lib/bootstrap.min.js"></script>
+  <!-- Custom JS -->
+  <script type="module" src="/../js/dashboard.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      function animateCounter(element, start, end, duration) {
+        let startTime = null;
+
+        function updateCounter(timestamp) {
+          if (!startTime) startTime = timestamp;
+          const progress = Math.min((timestamp - startTime) / duration, 1);
+          element.textContent = Math.floor(progress * (end - start) + start).toLocaleString();
+          if (progress < 1) {
+            requestAnimationFrame(updateCounter);
+          } else {
+            element.textContent = end.toLocaleString();
+          }
+        }
+
+        requestAnimationFrame(updateCounter);
+      }
+
+      const userCountElement = document.getElementById('userCount');
+      const examsCountElement = document.getElementById('examsCount');
+      const courseCountElement = document.getElementById('courseCount');
+      const courseLessonElement = document.getElementById('courseLesson');
+
+      animateCounter(userCountElement, 0, 1245, 2000); // Example: animate from 0 to 1245 over 2000ms
+      animateCounter(examsCountElement, 0, 25, 2000); // Example: animate from 0 to 15 over 2000ms
+      animateCounter(courseCountElement, 0, 15, 2000); // Example: animate from 0 to 15 over 2000ms
+      animateCounter(courseLessonElement, 0, 100, 2000); // Example: animate from 0 to 100 over 2000ms
+    });
+
+  </script>
+</body>
+
+</html>
