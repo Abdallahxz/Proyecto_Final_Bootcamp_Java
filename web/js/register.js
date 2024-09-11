@@ -40,9 +40,15 @@ $(document).ready(function () {
     $('#registerForm').submit(function (e) {
         e.preventDefault();
 
+		const age = document.getElementById('age').value;
         const password = $('#password').val();
         const confirmPassword = $('#confirmPassword').val();
 
+		if (age < 0) {
+            toastr.error('Age cannot be negative.');
+            return;
+        }
+		
         if (password !== confirmPassword) {
             alert('Passwords do not match!');
             return;
@@ -70,7 +76,7 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.success == true) {
                     toastr.options.onHidden = function () {
-                        window.location.href = "login.html";
+                        window.location.href = "login_en.html";
                     };
                     toastr["success"]("Registration successful!", "Success");
                 }

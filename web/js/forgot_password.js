@@ -31,10 +31,10 @@ $(document).ready(function () {
             method: 'POST',
             data: { email: email },
             success: function (response) {
-                toastr.success('Correo de recuperación enviado con éxito.');
+                toastr.success('A password reset link has been sent to your email!');
             },
             error: function (error) {
-                toastr.error('Error al enviar el correo de recuperación.');
+                toastr.error('Error sending recovery email.');
             }
         });
     });
