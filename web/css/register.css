@@ -110,3 +110,40 @@ label {
     font-weight: bold;
     text-align: start;
 }
+
+.language-selector {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.language-selector select {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    font-size: 14px;
+    appearance: none; /* Remove default arrow */
+    -webkit-appearance: none; /* Remove default arrow for Safari */
+    background-image: url('image/reino_unido.png'); /* Default flag */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 40px; /* Adjust to make space for the flag */
+}
+
+.language-selector option {
+    background-repeat: no-repeat;
+    background-position: right center;
+    padding-left: 30px; /* Adjust to make space for the flag */
+}
+
+.language-selector option[value="en"] {
+    background-image: url('image/reino_unido.png');
+	background-size: 20px 15px;
+}
+
+.language-selector option[value="es"] {
+    background-image: url('image/espana.png');
+	background-size: 20px 15px;
+}

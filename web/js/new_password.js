@@ -36,6 +36,36 @@ $(document).ready(function () {
         $(this).toggleClass('fa-eye fa-eye-slash');
     });
 
+	const languageSelect = document.getElementById('languageSelect');
+
+    // Cambiar el idioma cuando se seleccione una opción
+    languageSelect.addEventListener('change', function () {
+        const selectedLanguage = languageSelect.value;
+        const currentPath = window.location.pathname;
+
+        // Redirigir a la página correspondiente según el idioma seleccionado
+        if (selectedLanguage === 'en') {
+            window.location.href = currentPath.replace('_es', '_en');
+        } else if (selectedLanguage === 'es') {
+            window.location.href = currentPath.replace('_en', '_es');
+        }
+
+        // Actualizar la bandera mostrada en el seleccionador
+        const selectedOption = languageSelect.options[languageSelect.selectedIndex];
+        languageSelect.style.backgroundImage = `url(${selectedOption.getAttribute('data-icon')})`;
+    });
+
+    // Establecer el valor del selector según el idioma actual
+    if (window.location.pathname.includes('_es')) {
+        languageSelect.value = 'es';
+    } else {
+        languageSelect.value = 'en';
+    }
+
+    // Inicializar la bandera mostrada en el seleccionador
+    const selectedOption = languageSelect.options[languageSelect.selectedIndex];
+    languageSelect.style.backgroundImage = `url(${selectedOption.getAttribute('data-icon')})`;
+
     // Form submission
     $('#registerForm').submit(function (e) {
         e.preventDefault();
@@ -44,7 +74,7 @@ $(document).ready(function () {
         const confirmPassword = $('#confirmPassword').val();
 
         if (password !== confirmPassword) {
-            alert('Passwords do not match!');
+            toastr.error('Passwords do not match!');
             return;
         }
 

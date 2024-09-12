@@ -38,4 +38,35 @@ $(document).ready(function () {
             }
         });
     });
+	
+	const languageSelect = document.getElementById('languageSelect');
+
+    // Cambiar el idioma cuando se seleccione una opción
+    languageSelect.addEventListener('change', function () {
+        const selectedLanguage = languageSelect.value;
+        const currentPath = window.location.pathname;
+
+        // Redirigir a la página correspondiente según el idioma seleccionado
+        if (selectedLanguage === 'en') {
+            window.location.href = currentPath.replace('_es', '_en');
+        } else if (selectedLanguage === 'es') {
+            window.location.href = currentPath.replace('_en', '_es');
+        }
+
+        // Actualizar la bandera mostrada en el seleccionador
+        const selectedOption = languageSelect.options[languageSelect.selectedIndex];
+        languageSelect.style.backgroundImage = `url(${selectedOption.getAttribute('data-icon')})`;
+    });
+
+    // Establecer el valor del selector según el idioma actual
+    if (window.location.pathname.includes('_es')) {
+        languageSelect.value = 'es';
+    } else {
+        languageSelect.value = 'en';
+    }
+
+    // Inicializar la bandera mostrada en el seleccionador
+    const selectedOption = languageSelect.options[languageSelect.selectedIndex];
+    languageSelect.style.backgroundImage = `url(${selectedOption.getAttribute('data-icon')})`;
+
 });
