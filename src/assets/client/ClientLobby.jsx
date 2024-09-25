@@ -177,40 +177,8 @@ return (
           <div className="card-header bg-primary text-white">
             <i className="fas fa-bell" /> Latest Notifications
           </div>
-          <ul className="list-group list-group-flush">
-            {/* Notification 1 */}
-            <li className="list-group-item">
-              <i className="fas fa-tools notification-icon" />
-              <div>
-                <div className="notification-title">System Update</div>
-                <small className="notification-time">
-                  12 Aug 2024, 10:00 AM
-                </small>
-                <p className="notification-text">
-                  The system will undergo maintenance on 15th Aug. Expect
-                  downtime.
-                </p>
-              </div>
-            </li>
-            {/* Notification 2 */}
-            <li className="list-group-item">
-              <i className="fas fa-book-open notification-icon" />
-              <div>
-                <div className="notification-title">New Course Available</div>
-                <small className="notification-time">
-                  10 Aug 2024, 03:30 PM
-                </small>
-                <p className="notification-text">
-                    Introduction to AI course is now available.
-                </p>
-              </div>
-            </li>
-            {/* Add more notifications as needed */}
-          </ul>
-        </div>
-      </div>
-	  <ul id="notifications" className="list-group">
-        {messages.map(message => (
+          <ul id="notifications" className="list-group">
+            {messages.map(message => (
           <li className="list-group-item" key={message.id}>
             <i className="fas notification-icon"></i>
             <div>
@@ -219,8 +187,11 @@ return (
               <p className="notification-text">{message.body}</p>
             </div>
           </li>
-        ))}
-      </ul>
+            ))}
+          </ul>
+        </div>
+      </div>
+	  
     </div>
   </div>
   <Helmet>
