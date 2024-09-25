@@ -8,14 +8,17 @@ import 'toastr/build/toastr.min.css';
 import '/src/components/css/credentials/Register.css';
 
 const Register = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [passwordVisible, setPasswordVisible] = useState(false);
-  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
-  const [language, setLanguage] = useState('en');
-  const navigate = useNavigate();
+	const [name, setName] = useState('');
+	const [lastName, setLastName] = useState('');
+	const [age, setAge] = useState(0);
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const [confirmPassword, setConfirmPassword] = useState('');
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [passwordVisible, setPasswordVisible] = useState(false);
+	const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+	const [language, setLanguage] = useState('en');
+	const navigate = useNavigate();
 
     // Configurar opciones de Toastr
 	toastr.options = {
@@ -58,6 +61,9 @@ const Register = () => {
     setIsSubmitting(true);
 
     const userData = {
+	  name,
+	  lastName,
+	  age,
       email,
       password,
       confirmPassword
@@ -75,7 +81,7 @@ const Register = () => {
 		  });
 	  }, 2000); // 2 segundos de retraso para simular la solicitud*/
 	
-    axios.post('/api/auth/register', userData)
+    axios.post('http://localhost:8000/api/auth/register', userData)
       .then(response => {
 		handleResponse(response);
       })
@@ -160,13 +166,14 @@ const Register = () => {
 			<form onSubmit={handleSubmit} method="post" id="registerForm">
 				<div className="form-row">
 				<div className="form-group" data-translate>
-					<label className="register-label" htmlFor="firstName">Name</label>
+					<label className="register-label" htmlFor="name">Name</label>
 					<input
 					type="text"
 					maxLength="20"
 					className="form-control"
-					id="firstName"
+					id="name"
 					placeholder="Enter name"
+					onChange={(e) => setName(e.target.value)}
 					required="true"
 					/>
 				</div>
@@ -178,6 +185,7 @@ const Register = () => {
 					className="form-control"
 					id="lastName"
 					placeholder="Enter last name"
+					onChange={(e) => setLastName(e.target.value)}
 					required="true"
 					/>
 				</div>
@@ -192,6 +200,7 @@ const Register = () => {
 					placeholder="Enter age"
 					min={10}
 					max={80}
+					onChange={(e) => setAge(toInt(e.target.value))}
 					required="true"
 					/>
 				</div>

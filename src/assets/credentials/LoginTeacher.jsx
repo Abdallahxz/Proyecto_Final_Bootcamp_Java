@@ -71,11 +71,12 @@ const Login = () => {
 		  });
 	  }, 2000); // 2 segundos de retraso para simular la solicitud*/
 
-  axios.post('/api/auth/login', userData)
+  axios.post('http://localhost:8000/api/auth/login', userData)
       .then(response => {
 		handleResponse(response);
       })
       .catch(error => {
+		console.log(error);
         toastr.error('An error ocurred');
         setIsSubmitting(false);
       });
