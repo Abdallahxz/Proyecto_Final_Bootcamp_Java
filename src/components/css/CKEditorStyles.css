@@ -1,0 +1,58 @@
+/* CKEditorStyles.css */
+.ck-editor__editable_inline {
+    min-height: 300px;
+    max-height: 500px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+}
+
+.ck-toolbar {
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #ddd;
+}
+
+.ck-toolbar .ck-button {
+    color: #333;
+}
+
+.ck-button.ck-on {
+    background-color: #e0e0e0;
+}
+
+.ck-toolbar__separator {
+    background-color: #ddd;
+}
+
+/* Personaliza los iconos y botones */
+.ck-toolbar .ck-button__label {
+    font-size: 14px;
+}
+
+.ck-dropdown__panel {
+    box-shadow: none;
+    border: 1px solid #ddd;
+}
+
+.ck-heading-dropdown .ck-dropdown__panel {
+    width: 200px;
+}
+
+
+/* Ajusta el tamaño y la apariencia del editor */
+.ck-editor__editable_inline {
+    width: 100%;
+    height: auto;
+    min-height: 250px;
+    max-height: 400px;
+    background-color: white;
+    border: 1px solid #d1d1d1;
+    font-size: 16px;
+}
+
+/* Ajusta la barra de herramientas */
+.ck-toolbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+}

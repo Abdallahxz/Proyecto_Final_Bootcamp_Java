@@ -1,14 +1,8 @@
-# Plataforma educativa para personas con poco conocimiento tecnológico, como niños o personas mayores.
+# React + Vite
 
-## -Una página como HOME con imágenes que se pueden pasar usando flechas como botones. Además que agregar un botón de empezar con la tarea.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## -Secciones en la parte superior:
+Currently, two official plugins are available:
 
-1. Un HOME
-2. Un botón de aprendizaje
-3. Un botón de “sobre nosotros”
-4. Un botón de registro e inicio de sesión
-
-## -En la sección de aprendizaje se dividirá en varias secciones para aprender nuevas         tecnologías en las cuales se dividirán por ramas de lo que ofrecemos, Word, Excel, IA, programación, etc.
-
-## -Chat bot abajo a la derecha en todas las páginas para resolver dudas.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
