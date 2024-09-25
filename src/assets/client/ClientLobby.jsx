@@ -209,12 +209,7 @@ return (
           </ul>
         </div>
       </div>
-    </div>
-  </div>
-  <div id="courses">
-        
-      </div>
-      <ul id="notifications" className="list-group">
+	  <ul id="notifications" className="list-group">
         {messages.map(message => (
           <li className="list-group-item" key={message.id}>
             <i className="fas notification-icon"></i>
@@ -226,6 +221,8 @@ return (
           </li>
         ))}
       </ul>
+    </div>
+  </div>
   <Helmet>
 	{/* Bootstrap JS */}
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
