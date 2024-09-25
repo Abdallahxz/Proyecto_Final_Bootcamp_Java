@@ -42,7 +42,7 @@ const Register = () => {
 	  const handleResponse = (response) => {
 		if (response.data.success) {
 		  toastr.options.onHidden = () => {
-			navigate('/login');
+			navigate('/');
 		  };
 		  toastr.success('Register successfully!');
 		} else {
