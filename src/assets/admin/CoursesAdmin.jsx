@@ -10,6 +10,134 @@ import '/src/components/css/lib/all.min.css';
 import '/src/components/css/admin/Dashboard.css';
 
 function CoursesAdmin (){
+  async function addCourse(event) {
+    event.preventDefault();
+
+    const name = document.getElementById('courseTitle').value;
+    const description = document.getElementById('description').value;
+    const duration = document.getElementById('duration').value;
+    const students = document.getElementById('students').value;
+    const startDate = document.getElementById('startDate').value;
+
+    const courseData = {
+        name: name,
+        description: description,
+        duration: duration,
+        students: students,
+        startDate: startDate
+    };
+
+    try {
+        $.ajax({
+            url: "http://localhost:8000/api/courses",
+            type: "POST",
+            data: JSON.stringify(courseData),
+            contentType: "application/json",
+            success: function(response) {
+                toastr["success"]("Course added successfully!", "Success");
+                fetchCourses(); // Refresh the courses list
+                document.getElementById('courseTitle').value = "";
+                document.getElementById('description').value = "";
+                document.getElementById('duration').value = "";
+                document.getElementById('students').value = "";
+                document.getElementById('startDate').value = "";
+                document.getElementById('remove-course').setAttribute('data-course-id', null);
+                document.getElementById('update-course').setAttribute('data-course-id', null);
+            },
+            error: function(xhr, status, error) {
+                toastr["error"]("Course not added!", "Error");
+            }
+        });
+    } catch (error) {
+        toastr["error"]("Course not added!", "Error");
+    }
+}
+
+async function viewCourse(id) {
+  try {
+      let response = await fetch(`http://localhost:8000/api/courses/${id}`);
+      let course = await response.json();
+
+      document.getElementById('courseTitle').value = course.name;
+      document.getElementById('description').value = course.description;
+      document.getElementById('duration').value = course.duration;
+      document.getElementById('students').value = course.students;
+      document.getElementById('startDate').value = course.startDate;
+      document.getElementById('remove-course').setAttribute('data-course-id', course.id);
+      document.getElementById('update-course').setAttribute('data-course-id', course.id);
+  } catch (error) {
+      console.error("Error fetching course:", error);
+  }
+}
+
+async function removeCourse() {
+  const courseId = document.getElementById('remove-course').getAttribute('data-course-id');
+  try {
+      $.ajax({
+          url: `http://localhost:8000/api/courses/${courseId}`,
+          type: "DELETE",
+          success: function(response) {
+              toastr["success"]("Course removed successfully!", "Success");
+              fetchCourses(); // Refresh the courses list
+              document.getElementById('courseTitle').value = '';
+              document.getElementById('description').value = '';
+              document.getElementById('duration').value = '';
+              document.getElementById('students').value = '';
+              document.getElementById('startDate').value = '';
+              document.getElementById('remove-course').setAttribute('data-course-id', null);
+              document.getElementById('update-course').setAttribute('data-course-id', null);
+          },
+          error: function(xhr, status, error) {
+              toastr["error"]("Course not removed!", "Error");
+          }
+      });
+  } catch (error) {
+      toastr["error"]("Course not removed!", "Error");
+  }
+}
+
+async function updateCourse() {
+  const courseId = document.getElementById('update-course').getAttribute('data-course-id');
+  const name = document.getElementById('courseTitle').value;
+  const description = document.getElementById('description').value;
+  const duration = document.getElementById('duration').value;
+  const students = document.getElementById('students').value;
+  const startDate = document.getElementById('startDate').value;
+
+  const courseData = {
+      name: name,
+      description: description,
+      duration: duration,
+      students: students,
+      startDate: startDate
+  };
+
+  try {
+      $.ajax({
+          url: `http://localhost:8000/api/courses/${courseId}`,
+          type: "PUT",
+          data: JSON.stringify(courseData),
+          contentType: "application/json",
+          success: function(response) {
+              toastr["success"]("Course updated successfully!", "Success");
+              document.getElementById('courseTitle').value = '';
+              document.getElementById('description').value = '';
+              document.getElementById('duration').value = '';
+              document.getElementById('students').value = '';
+              document.getElementById('startDate').value = '';
+              document.getElementById('remove-course').setAttribute('data-course-id', null);
+              document.getElementById('update-course').setAttribute('data-course-id', null);
+              fetchCourses(); // Refresh the courses list
+          },
+          error: function(xhr, status, error) {
+              toastr["error"]("Course not updated!", "Error");
+          }
+      });
+  } catch (error) {
+      toastr["error"]("Course not updated!", "Error");
+  }
+}
+
 	useEffect(() => {
         toastr.options = {
             closeButton: false,
@@ -52,139 +180,12 @@ function CoursesAdmin (){
                 console.error("Error fetching courses:", error);
             }
         }
+        fetchCourses()
 
-        async function addCourse(event) {
-            event.preventDefault();
-
-            const name = document.getElementById('courseTitle').value;
-            const description = document.getElementById('description').value;
-            const duration = document.getElementById('duration').value;
-            const students = document.getElementById('students').value;
-            const startDate = document.getElementById('startDate').value;
-
-            const courseData = {
-                name: name,
-                description: description,
-                duration: duration,
-                students: students,
-                startDate: startDate
-            };
-
-            try {
-                $.ajax({
-                    url: "http://localhost:8000/api/courses",
-                    type: "POST",
-                    data: JSON.stringify(courseData),
-                    contentType: "application/json",
-                    success: function(response) {
-                        toastr["success"]("Course added successfully!", "Success");
-                        fetchCourses(); // Refresh the courses list
-                        document.getElementById('courseTitle').value = "";
-                        document.getElementById('description').value = "";
-                        document.getElementById('duration').value = "";
-                        document.getElementById('students').value = "";
-                        document.getElementById('startDate').value = "";
-                        document.getElementById('remove-course').setAttribute('data-course-id', null);
-                        document.getElementById('update-course').setAttribute('data-course-id', null);
-                    },
-                    error: function(xhr, status, error) {
-                        toastr["error"]("Course not added!", "Error");
-                    }
-                });
-            } catch (error) {
-                toastr["error"]("Course not added!", "Error");
-            }
-        }
-
-        async function viewCourse(id) {
-            try {
-                let response = await fetch(`http://localhost:8000/api/courses/${id}`);
-                let course = await response.json();
-
-                document.getElementById('courseTitle').value = course.name;
-                document.getElementById('description').value = course.description;
-                document.getElementById('duration').value = course.duration;
-                document.getElementById('students').value = course.students;
-                document.getElementById('startDate').value = course.startDate;
-                document.getElementById('remove-course').setAttribute('data-course-id', course.id);
-                document.getElementById('update-course').setAttribute('data-course-id', course.id);
-            } catch (error) {
-                console.error("Error fetching course:", error);
-            }
-        }
-
-        async function removeCourse() {
-            const courseId = document.getElementById('remove-course').getAttribute('data-course-id');
-            try {
-                $.ajax({
-                    url: `http://localhost:8000/api/courses/${courseId}`,
-                    type: "DELETE",
-                    success: function(response) {
-                        toastr["success"]("Course removed successfully!", "Success");
-                        fetchCourses(); // Refresh the courses list
-                        document.getElementById('courseTitle').value = '';
-                        document.getElementById('description').value = '';
-                        document.getElementById('duration').value = '';
-                        document.getElementById('students').value = '';
-                        document.getElementById('startDate').value = '';
-                        document.getElementById('remove-course').setAttribute('data-course-id', null);
-                        document.getElementById('update-course').setAttribute('data-course-id', null);
-                    },
-                    error: function(xhr, status, error) {
-                        toastr["error"]("Course not removed!", "Error");
-                    }
-                });
-            } catch (error) {
-                toastr["error"]("Course not removed!", "Error");
-            }
-        }
-
-        async function updateCourse() {
-            const courseId = document.getElementById('update-course').getAttribute('data-course-id');
-            const name = document.getElementById('courseTitle').value;
-            const description = document.getElementById('description').value;
-            const duration = document.getElementById('duration').value;
-            const students = document.getElementById('students').value;
-            const startDate = document.getElementById('startDate').value;
-
-            const courseData = {
-                name: name,
-                description: description,
-                duration: duration,
-                students: students,
-                startDate: startDate
-            };
-
-            try {
-                $.ajax({
-                    url: `http://localhost:8000/api/courses/${courseId}`,
-                    type: "PUT",
-                    data: JSON.stringify(courseData),
-                    contentType: "application/json",
-                    success: function(response) {
-                        toastr["success"]("Course updated successfully!", "Success");
-                        document.getElementById('courseTitle').value = '';
-                        document.getElementById('description').value = '';
-                        document.getElementById('duration').value = '';
-                        document.getElementById('students').value = '';
-                        document.getElementById('startDate').value = '';
-                        document.getElementById('remove-course').setAttribute('data-course-id', null);
-                        document.getElementById('update-course').setAttribute('data-course-id', null);
-                        fetchCourses(); // Refresh the courses list
-                    },
-                    error: function(xhr, status, error) {
-                        toastr["error"]("Course not updated!", "Error");
-                    }
-                });
-            } catch (error) {
-                toastr["error"]("Course not updated!", "Error");
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', fetchCourses);
-        document.getElementById('add-course').addEventListener('click', addCourse);
-        document.getElementById('remove-course').addEventListener('click', removeCourse);
-        document.getElementById('update-course').addEventListener('click', updateCourse);
+        //document.addEventListener('DOMContentLoaded', fetchCourses);
+        //document.getElementById('add-course').addEventListener('click', addCourse);
+        //document.getElementById('remove-course').addEventListener('click', removeCourse);
+        //document.getElementById('update-course').addEventListener('click', updateCourse);
     }, []);
 
 return(
@@ -387,6 +388,7 @@ return(
               type="button"
               id="add-course"
               className="btn btn-primary btn-block mb-2"
+              onClick={addCourse}
             >
               {" "}
               Add Course
@@ -406,6 +408,7 @@ return(
                 id="update-course"
                 className="btn btn-warning btn-block m-0"
                 aria-label="Update course"
+                onClick={removeCourse}
               >
                 Update Course
               </button>

@@ -139,132 +139,36 @@ return (
       {/* Left Section: Courses */}
       <div className="col-md-8">
         <div className="dashboard-container-card">
-          {/* Exam Card 1 */}
-          <div className="ag-courses_item">
-            <i className="fas fa-pencil-alt exam-icon" />
-            {/* إضافة أيقونة */}
-            <img
-              src="/src/components/image/courses/course_1.webp"
-              alt="Python Exam"
-              className="ag-courses-item_image"
-            />
-            <div className="ag-courses-item_content">
-              <div className="ag-courses-item_title">Python Exam</div>
-              <div className="ag-courses-item_date-box">
-                Start: <span className="ag-courses-item_date">20.09.2024</span>
-              </div>
-              <div
-                className="btn-group my-2"
-                style={{ display: "flex", justifyContent: "flex-end" }}
-              >
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  style={{ maxWidth: 100 }}
-                  aria-label="More information about Python Exam"
-                >
-					<Link to="/clientcourses" style={{ color: 'white' }}>
-						More info
-					</Link>  
-                </button>
-              </div>
-              <div className="progress" aria-label="Exam progress">
-                <div
-                  className="progress-bar bg-danger"
-                  role="progressbar"
-                  style={{ width: "70%" }}
-                  aria-valuenow={70}
-                  aria-valuemin={0}
-                  aria-valuemax={100}
-                  aria-label="70% completed"
+          { courses.length > 0 ? 
+            courses.map(course => (
+              <div className="ag-courses_item" key={course.id}>
+                <i className="fas fa-laptop-code course-icon"></i>
+                <img
+                  src="/src/components/image/courses/course_1.webp"
+                  alt={course.name}
+                  className="ag-courses-item_image"
                 />
+                <div className="ag-courses-item_content">
+                  <div className="ag-courses-item_title">{course.name}</div>
+                  <div className="ag-courses-item_date-box">
+                    Start: <span className="ag-courses-item_date">{course.startDate}</span>
+                  </div>
+                  <div className="btn-group my-2" style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      style={{ maxWidth: '100px' }}
+                      onClick={() => window.location.href = `/client/course.html?id=${course.id}`}
+                      aria-label={`More information about ${course.name}`}
+                    >
+                      More info
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          {/* Course Card 2 */}
-          <div className="ag-courses_item">
-            <i className="fas fa-laptop-code course-icon" />
-            <img
-              src="/src/components/image/courses/course_1.webp"
-              alt="Introduction to Data Science"
-              className="ag-courses-item_image"
-            />
-            <div className="ag-courses-item_content">
-              <div className="ag-courses-item_title">
-                Introduction to Data Science
-              </div>
-              <div className="ag-courses-item_date-box">
-                Start: <span className="ag-courses-item_date">15.01.2023</span>
-              </div>
-              <div
-                className="btn-group my-2"
-                style={{ display: "flex", justifyContent: "flex-end" }}
-              >
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  style={{ maxWidth: 100 }}
-                  aria-label="More information about Introduction to Data Science"
-                >
-                  More info
-                </button>
-              </div>
-              <div className="progress" aria-label="Course progress">
-                <div
-                  className="progress-bar bg-warning"
-                  role="progressbar"
-                  style={{ width: "50%" }}
-                  aria-valuenow={50}
-                  aria-valuemin={0}
-                  aria-valuemax={100}
-                  aria-label="50% completed"
-                />
-              </div>
-            </div>
-          </div>
-          {/* Course Card 1 */}
-          <div className="ag-courses_item">
-            <i className="fas fa-laptop-code course-icon" />
-            {/* إضافة أيقونة */}
-            <img
-              src="/src/components/image/courses/course_1.webp"
-              alt="Advanced Programming in Python"
-              className="ag-courses-item_image"
-            />
-            <div className="ag-courses-item_content">
-              <div className="ag-courses-item_title">
-                Advanced Programming in Python
-              </div>
-              <div className="ag-courses-item_date-box">
-                Start: <span className="ag-courses-item_date">10.12.2022</span>
-              </div>
-              <div
-                className="btn-group my-2"
-                style={{ display: "flex", justifyContent: "flex-end" }}
-              >
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  style={{ maxWidth: 100 }}
-                  aria-label="More information about Advanced Programming in Python"
-                >
-                  More info
-                </button>
-              </div>
-              <div className="progress" aria-label="Course progress">
-                <div
-                  className="progress-bar bg-success"
-                  role="progressbar"
-                  style={{ width: "60%" }}
-                  aria-valuenow={60}
-                  aria-valuemin={0}
-                  aria-valuemax={100}
-                  aria-label="60% completed"
-                />
-              </div>
-            </div>
-          </div>
-          {/* Add more course cards as needed */}
+            ))
+            : <p>No courses yet!</p>
+          }
         </div>
       </div>
       {/* Right Section: Sidebar for Notifications */}
@@ -308,33 +212,7 @@ return (
     </div>
   </div>
   <div id="courses">
-        {courses.map(course => (
-          <div className="ag-courses_item" key={course.id}>
-            <i className="fas fa-laptop-code course-icon"></i>
-            <img
-              src="/image/courses/course_1.webp"
-              alt={course.name}
-              className="ag-courses-item_image"
-            />
-            <div className="ag-courses-item_content">
-              <div className="ag-courses-item_title">{course.name}</div>
-              <div className="ag-courses-item_date-box">
-                Start: <span className="ag-courses-item_date">{course.startDate}</span>
-              </div>
-              <div className="btn-group my-2" style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  style={{ maxWidth: '100px' }}
-                  onClick={() => window.location.href = `/client/course.html?id=${course.id}`}
-                  aria-label={`More information about ${course.name}`}
-                >
-                  More info
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
+        
       </div>
       <ul id="notifications" className="list-group">
         {messages.map(message => (

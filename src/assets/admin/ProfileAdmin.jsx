@@ -224,26 +224,26 @@ return (
 			<div className="profile-form-card col-md-8">
 				<form className="profile-form">
 					<div className="form-row">
-					<div className="form-group col-md-6">
-						<label htmlFor="FirstName">First Name</label>
-						<input
-						type="text"
-						id="FirstName"
-						className="form-control"
-						placeholder="First Name"
-						aria-required="true"
-						/>
-					</div>
-					<div className="form-group col-md-6">
-						<label htmlFor="LastName">Last Name</label>
-						<input
-						type="text"
-						id="LastName"
-						className="form-control"
-						placeholder="Last Name"
-						aria-required="true"
-						/>
-					</div>
+            <div className="form-group col-md-6">
+              <label htmlFor="FirstName">First Name</label>
+              <input
+              type="text"
+              id="FirstName"
+              className="form-control"
+              placeholder="First Name"
+              aria-required="true"
+              />
+            </div>
+            <div className="form-group col-md-6">
+              <label htmlFor="LastName">Last Name</label>
+              <input
+              type="text"
+              id="LastName"
+              className="form-control"
+              placeholder="Last Name"
+              aria-required="true"
+              />
+            </div>
 					</div>
 					<div className="form-row">
 					<div className="form-group col-md-6">
