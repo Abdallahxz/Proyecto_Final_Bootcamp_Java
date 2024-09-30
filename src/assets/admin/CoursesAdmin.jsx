@@ -9,7 +9,7 @@ import '/src/components/css/lib/bootstrap.min.css';
 import '/src/components/css/lib/all.min.css';
 import '/src/components/css/admin/Dashboard.css';
 
-function CoursesAdmin (){
+function CoursesAdmin() {
   async function addCourse(event) {
     event.preventDefault();
 
@@ -20,41 +20,91 @@ function CoursesAdmin (){
     const startDate = document.getElementById('startDate').value;
 
     const courseData = {
-        name: name,
-        description: description,
-        duration: duration,
-        students: students,
-        startDate: startDate
+      name: name,
+      description: description,
+      duration: duration,
+      students: students,
+      startDate: startDate
     };
 
     try {
-        $.ajax({
-            url: "http://localhost:8000/api/courses",
-            type: "POST",
-            data: JSON.stringify(courseData),
-            contentType: "application/json",
-            success: function(response) {
-                toastr["success"]("Course added successfully!", "Success");
-                fetchCourses(); // Refresh the courses list
-                document.getElementById('courseTitle').value = "";
-                document.getElementById('description').value = "";
-                document.getElementById('duration').value = "";
-                document.getElementById('students').value = "";
-                document.getElementById('startDate').value = "";
-                document.getElementById('remove-course').setAttribute('data-course-id', null);
-                document.getElementById('update-course').setAttribute('data-course-id', null);
-            },
-            error: function(xhr, status, error) {
-                toastr["error"]("Course not added!", "Error");
-            }
-        });
+      $.ajax({
+        url: "http://localhost:8000/api/courses",
+        type: "POST",
+        data: JSON.stringify(courseData),
+        contentType: "application/json",
+        success: function (response) {
+          toastr["success"]("Course added successfully!", "Success");
+          fetchCourses(); // Refresh the courses list
+          clearForm();
+        },
+        error: function (xhr, status, error) {
+          toastr["error"]("Course not added!", "Error");
+        }
+      });
     } catch (error) {
-        toastr["error"]("Course not added!", "Error");
+      toastr["error"]("Course not added!", "Error");
     }
-}
+  }
 
-async function viewCourse(id) {
-  try {
+  async function removeCourse() {
+    const courseId = document.getElementById('remove-course').getAttribute('data-course-id');
+    try {
+      $.ajax({
+        url: `http://localhost:8000/api/courses/${courseId}`,
+        type: "DELETE",
+        success: function (response) {
+          toastr["success"]("Course removed successfully!", "Success");
+          fetchCourses();
+          clearForm();
+        },
+        error: function (xhr, status, error) {
+          toastr["error"]("Course not removed!", "Error");
+        }
+      });
+    } catch (error) {
+      toastr["error"]("Course not removed!", "Error");
+    }
+  }
+
+  async function updateCourse() {
+    const courseId = document.getElementById('update-course').getAttribute('data-course-id');
+    const name = document.getElementById('courseTitle').value;
+    const description = document.getElementById('description').value;
+    const duration = document.getElementById('duration').value;
+    const students = document.getElementById('students').value;
+    const startDate = document.getElementById('startDate').value;
+
+    const courseData = {
+      name: name,
+      description: description,
+      duration: duration,
+      students: students,
+      startDate: startDate
+    };
+
+    try {
+      $.ajax({
+        url: `http://localhost:8000/api/courses/${courseId}`,
+        type: "PUT",
+        data: JSON.stringify(courseData),
+        contentType: "application/json",
+        success: function (response) {
+          toastr["success"]("Course updated successfully!", "Success");
+          clearForm();
+          fetchCourses();
+        },
+        error: function (xhr, status, error) {
+          toastr["error"]("Course not updated!", "Error");
+        }
+      });
+    } catch (error) {
+      toastr["error"]("Course not updated!", "Error");
+    }
+  }
+
+  async function viewCourse(id) {
+    try {
       let response = await fetch(`http://localhost:8000/api/courses/${id}`);
       let course = await response.json();
 
@@ -65,128 +115,75 @@ async function viewCourse(id) {
       document.getElementById('startDate').value = course.startDate;
       document.getElementById('remove-course').setAttribute('data-course-id', course.id);
       document.getElementById('update-course').setAttribute('data-course-id', course.id);
-  } catch (error) {
+    } catch (error) {
       console.error("Error fetching course:", error);
+    }
   }
-}
 
-async function removeCourse() {
-  const courseId = document.getElementById('remove-course').getAttribute('data-course-id');
-  try {
-      $.ajax({
-          url: `http://localhost:8000/api/courses/${courseId}`,
-          type: "DELETE",
-          success: function(response) {
-              toastr["success"]("Course removed successfully!", "Success");
-              fetchCourses(); // Refresh the courses list
-              document.getElementById('courseTitle').value = '';
-              document.getElementById('description').value = '';
-              document.getElementById('duration').value = '';
-              document.getElementById('students').value = '';
-              document.getElementById('startDate').value = '';
-              document.getElementById('remove-course').setAttribute('data-course-id', null);
-              document.getElementById('update-course').setAttribute('data-course-id', null);
-          },
-          error: function(xhr, status, error) {
-              toastr["error"]("Course not removed!", "Error");
-          }
+  async function fetchCourses() {
+    try {
+      let response = await fetch("http://localhost:8000/api/courses");
+      let courses = await response.json();
+
+      const coursesList = document.querySelector('.courses-list');
+      coursesList.innerHTML = ''; // تفريغ القائمة قبل الإضافة
+
+      courses.forEach(course => {
+        let courseItem = `
+              <div class="courses-item">
+                  <h5 class="courses-item-title">${course.name}</h5>
+                  <p>Duration: ${course.duration} weeks</p>
+                  <p>${course.description}</p>
+                  <a href="javascript:void(0)" data-course-id="${course.id}" class="btn btn-primary mt-2 view-course">More Info</a>
+              </div>
+          `;
+        coursesList.innerHTML += courseItem;
       });
-  } catch (error) {
-      toastr["error"]("Course not removed!", "Error");
-  }
-}
 
-async function updateCourse() {
-  const courseId = document.getElementById('update-course').getAttribute('data-course-id');
-  const name = document.getElementById('courseTitle').value;
-  const description = document.getElementById('description').value;
-  const duration = document.getElementById('duration').value;
-  const students = document.getElementById('students').value;
-  const startDate = document.getElementById('startDate').value;
-
-  const courseData = {
-      name: name,
-      description: description,
-      duration: duration,
-      students: students,
-      startDate: startDate
-  };
-
-  try {
-      $.ajax({
-          url: `http://localhost:8000/api/courses/${courseId}`,
-          type: "PUT",
-          data: JSON.stringify(courseData),
-          contentType: "application/json",
-          success: function(response) {
-              toastr["success"]("Course updated successfully!", "Success");
-              document.getElementById('courseTitle').value = '';
-              document.getElementById('description').value = '';
-              document.getElementById('duration').value = '';
-              document.getElementById('students').value = '';
-              document.getElementById('startDate').value = '';
-              document.getElementById('remove-course').setAttribute('data-course-id', null);
-              document.getElementById('update-course').setAttribute('data-course-id', null);
-              fetchCourses(); // Refresh the courses list
-          },
-          error: function(xhr, status, error) {
-              toastr["error"]("Course not updated!", "Error");
-          }
+      // إضافة الحدث لكل عنصر
+      document.querySelectorAll('.view-course').forEach(button => {
+        button.addEventListener('click', function () {
+          let courseId = this.getAttribute('data-course-id');
+          viewCourse(courseId);
+        });
       });
-  } catch (error) {
-      toastr["error"]("Course not updated!", "Error");
+
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+    }
   }
-}
 
-	useEffect(() => {
-        toastr.options = {
-            closeButton: false,
-            debug: false,
-            newestOnTop: false,
-            progressBar: true,
-            positionClass: "toast-top-right",
-            preventDuplicates: false,
-            onclick: null,
-            showDuration: "300",
-            hideDuration: "1000",
-            timeOut: "2000",
-            extendedTimeOut: "500",
-            showEasing: "swing",
-            hideEasing: "linear",
-            showMethod: "fadeIn",
-            hideMethod: "fadeOut"
-        };
+  function clearForm() {
+    document.getElementById('courseTitle').value = '';
+    document.getElementById('description').value = '';
+    document.getElementById('duration').value = '';
+    document.getElementById('students').value = '';
+    document.getElementById('startDate').value = '';
+    document.getElementById('remove-course').setAttribute('data-course-id', null);
+    document.getElementById('update-course').setAttribute('data-course-id', null);
+  }
 
-        async function fetchCourses() {
-            try {
-                let response = await fetch("http://localhost:8000/api/courses");
-                let courses = await response.json();
+  useEffect(() => {
+    toastr.options = {
+      closeButton: false,
+      debug: false,
+      newestOnTop: false,
+      progressBar: true,
+      positionClass: "toast-top-right",
+      preventDuplicates: false,
+      onclick: null,
+      showDuration: "300",
+      hideDuration: "1000",
+      timeOut: "2000",
+      extendedTimeOut: "500",
+      showEasing: "swing",
+      hideEasing: "linear",
+      showMethod: "fadeIn",
+      hideMethod: "fadeOut"
+    };
 
-                const coursesList = document.querySelector('.courses-list');
-                coursesList.innerHTML = ''; // Clear the list before appending
-
-                courses.forEach(course => {
-                    let courseItem = `
-                        <div class="courses-item">
-                            <h5 class="courses-item-title">${course.name}</h5>
-                            <p>Duration: ${course.duration} weeks</p>
-                            <p>${course.description}</p>
-                            <a href="javascript:void(0)" data-course-id="${course.id}" class="btn btn-primary mt-2 view-course">More Info</a>
-                        </div>
-                    `;
-                    coursesList.innerHTML += courseItem;
-                });
-            } catch (error) {
-                console.error("Error fetching courses:", error);
-            }
-        }
-        fetchCourses()
-
-        //document.addEventListener('DOMContentLoaded', fetchCourses);
-        //document.getElementById('add-course').addEventListener('click', addCourse);
-        //document.getElementById('remove-course').addEventListener('click', removeCourse);
-        //document.getElementById('update-course').addEventListener('click', updateCourse);
-    }, []);
+    fetchCourses();
+  }, []); // لا داعي لإضافة المستمعين يدوياً هنا
 
 return(
 <>
@@ -265,7 +262,7 @@ return(
           </ul>
         </div>
         <div className="p-3">
-          <Link to="/Loginteacher" className="nav-link">
+          <Link to="/" className="nav-link">
             <i className="fas fa-sign-out-alt" /> Logout
           </Link>
         </div>
@@ -399,6 +396,8 @@ return(
                 className="btn btn-danger btn-block btn-action mr-1"
                 aria-label="Remove course"
                 id="remove-course"
+                onClick={removeCourse} 
+
               >
                 {" "}
                 Remove Course
@@ -408,7 +407,8 @@ return(
                 id="update-course"
                 className="btn btn-warning btn-block m-0"
                 aria-label="Update course"
-                onClick={removeCourse}
+                onClick={updateCourse} 
+
               >
                 Update Course
               </button>

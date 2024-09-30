@@ -72,7 +72,7 @@ return(
           </ul>
         </div>
         <div className="p-3">
-          <Link to="/Loginteacher" className="nav-link">
+          <Link to="/" className="nav-link">
             <i className="fas fa-sign-out-alt" /> Logout
           </Link>
         </div>
@@ -280,7 +280,7 @@ return(
                   rows={4}
                   placeholder="Student's answer here..."
                   readOnly="yes"
-                  defaultValue={"Lorem ipsum dolor sit amet."}
+                  defaultValue={""}
                 />
               </div>
               {/* Question 4: Essay */}
@@ -295,7 +295,7 @@ return(
                   placeholder="Student's essay here..."
                   readOnly="yes"
                   defaultValue={
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                    ""
                   }
                 />
               </div>

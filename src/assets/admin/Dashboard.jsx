@@ -111,7 +111,7 @@ const Dashboard = () => {
           </ul>
         </div>
         <div className="p-3">
-          <Link to="/Loginteacher" className="nav-link">
+          <Link to="/" className="nav-link">
             <i className="fas fa-sign-out-alt" /> Logout
           </Link>
         </div>

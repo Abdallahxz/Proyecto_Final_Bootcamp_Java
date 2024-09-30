@@ -293,7 +293,7 @@ return (
           {/*<!-- Footer -->*/}
       <footer className="bg-dark text-white py-3 text-center">
         <div className="container">
-            <p className="mb-0">&copy; 2023 Online Courses. All rights reserved.</p>
+            <p className="mb-0">&copy; 2024 Online Courses. All rights reserved.</p>
         </div>
     </footer>
 	<Helmet>

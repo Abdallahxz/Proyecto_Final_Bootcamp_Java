@@ -295,7 +295,7 @@ const Register = () => {
 			style={{ marginTop: 10, justifyContent: "space-around" }}
 			>
 			Do you have an account?
-			<Link to="/loginstudent">
+			<Link to="/loginteacher">
 				{" "}
 				Login <i className="fa-solid fa-right-to-bracket" />
 			</Link>
